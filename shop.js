@@ -8,7 +8,7 @@ var products = [{
 		price : 30,
 		inventory : 80
 	},{
-	name: 'MyCastomProduct',
+	name: 'MyCustomProduct',
 	price: 12.3,
 	inventory: 20
 

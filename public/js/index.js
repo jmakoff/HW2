@@ -3,16 +3,17 @@ var socket = io('http://localhost:3000');
 
 socket.on("productAddedToBasket", function (data) {
     var $productLineItems = $('.product-line-items');
-    $productLineItems.empty();
+    /*$productLineItems.empty();*/
 
     $(".js_place-order").show();
+    console.log('you can make order')
 
     // Визуально добавить продукт в Basket
     var products = "";
 
     $.each(data.basket.productLineItems, function (i, item) {
+        products += /*"<p>" + item.product.name + "</p>";*/` <h3>Name: ${item.product.name}, &nbsp; Price: ${item.product.price}</h3>  `
 
-        products += /*"<p>" + item.product.name + "</p>";*/`<p> ${item.product.name}</p>`
 
     });
     $productLineItems.prepend(products);
@@ -21,8 +22,8 @@ socket.on("productAddedToBasket", function (data) {
 });
 
 socket.on("orderPlaced", function (order) {
-    $('.product-line-items').empty();
-    $('.js_place-order').hide();
+    $('.product-line-items h3').empty();
+   /* $('.js_place-order').hide();*/
 
     alert('Order placed!\n\n Total price: ' + order);
 })
@@ -81,8 +82,14 @@ $(function () {
             products += counter + ". " + $(this).text() + "\n";
             ++counter;
         });
+        console.log($('div[class^="product-line-items"] p').text())
+       /* if (products === ""){
+            alert('please choose at least one item!')
+            return false;
+        }*/
 
         var confirmed = confirm('Place this order?\n\n' + products);
+
 
         if (confirmed)
             socket.emit("placeOrder");
